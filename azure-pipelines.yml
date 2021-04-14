@@ -19,3 +19,23 @@ steps:
     npm install
     npm run build
   displayName: 'npm install and build'
+  
+jobs:  
+- deployment: stagingDeploy
+  displayName: staging
+  environment:
+    name:  staging
+    resourceType: VirtualMachine
+    tags: web
+  strategy:
+    runOnce:
+      deploy:
+        steps:
+        - script: echo my first deployment
+    on:
+      failure:
+        steps:
+        - script: echo Restore from backup! This is on failure
+      success:
+        steps:
+        - script: echo Notify! This is on success
