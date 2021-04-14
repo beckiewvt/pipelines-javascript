@@ -3,63 +3,63 @@
 # Add steps that analyze code, save build artifacts, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
 
-# trigger:
-# - master
+trigger:
+- master
 
-# pool:
-#   vmImage: ubuntu-latest
+pool:
+  vmImage: ubuntu-latest
 
-# steps:
-# - task: NodeTool@0
-#   inputs:
-#     versionSpec: '12.x'
-#   displayName: 'Install Node.js'
-# - script: |
-#     npm install
-#     npm run build
-#   displayName: 'npm install and build'
+steps:
+- task: NodeTool@0
+  inputs:
+    versionSpec: '12.x'
+  displayName: 'Install Node.js'
+- script: |
+    npm install
+    npm run build
+  displayName: 'npm install and build'
    
-- stage: Build
-  displayName: Build stage
-  jobs:  
-  - job: Build
-    displayName: Build
-    - task: NodeTool@0
-      inputs:
-        versionSpec: '10.x'
-      displayName: 'Install Node.js'
-    - script: |
-        npm install
-        npm run build --if-present
-        npm run test --if-present
-      displayName: 'npm install, build and test'
-    - task: ArchiveFiles@2
-      displayName: 'Archive files'
-      inputs:
-        rootFolderOrFile: '$(System.DefaultWorkingDirectory)'
-        includeRootFolder: false
-        archiveType: zip
-        archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
-        replaceExistingArchive: true
-    - upload: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
-      artifact: drop   
+# - stage: Build
+#   displayName: Build stage
+#   jobs:  
+#   - job: Build
+#     displayName: Build
+#     - task: NodeTool@0
+#       inputs:
+#         versionSpec: '10.x'
+#       displayName: 'Install Node.js'
+#     - script: |
+#         npm install
+#         npm run build --if-present
+#         npm run test --if-present
+#       displayName: 'npm install, build and test'
+#     - task: ArchiveFiles@2
+#       displayName: 'Archive files'
+#       inputs:
+#         rootFolderOrFile: '$(System.DefaultWorkingDirectory)'
+#         includeRootFolder: false
+#         archiveType: zip
+#         archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+#         replaceExistingArchive: true
+#     - upload: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+#       artifact: drop   
    
-jobs:  
-- deployment: stagingDeploy
-  displayName: staging
-  environment:
-    name:  staging
-    resourceType: VirtualMachine
-    tags: web
-  strategy:
-    runOnce:
-      deploy:
-        steps:
-        - script: echo my first deployment
-    on:
-      failure:
-        steps:
-        - script: echo Restore from backup! This is on failure
-      success:
-        steps:
-        - script: echo Notify! This is on success
+# jobs:  
+# - deployment: stagingDeploy
+#   displayName: staging
+#   environment:
+#     name:  staging
+#     resourceType: VirtualMachine
+#     tags: web
+#   strategy:
+#     runOnce:
+#       deploy:
+#         steps:
+#         - script: echo my first deployment
+#     on:
+#       failure:
+#         steps:
+#         - script: echo Restore from backup! This is on failure
+#       success:
+#         steps:
+#         - script: echo Notify! This is on success
