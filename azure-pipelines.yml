@@ -61,16 +61,15 @@ steps:
     rootFolderOrFile: '$(System.DefaultWorkingDirectory)'
     includeRootFolder: false
 
-- stage: deploy
-  jobs:
-  - deployment: DeployWeb
-    displayName: deploy Web App
-    pool:
-      vmImage: 'Ubuntu-latest'
-    # creates an environment if it doesn't exist
-    environment: 'alpha'
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-          - script: 'npm run start' 
+jobs:
+- deployment: DeployWeb
+  displayName: deploy Web App
+  pool:
+    vmImage: 'Ubuntu-latest'
+  # creates an environment if it doesn't exist
+  environment: 'alpha'
+  strategy:
+    runOnce:
+      deploy:
+        steps:
+        - script: 'npm run start'
