@@ -21,17 +21,39 @@ steps:
     npm run build
   displayName: 'npm install and build'
 
-# - task: CopyFiles@2
-#   inputs:
-#     Contents: 'build/**' # Pull the build directory (React)
-#     TargetFolder: '$(Build.ArtifactStagingDirectory)'
+- task: CopyFiles@2
+  inputs:
+    # Contents: 'build/**' # Pull the build directory (React)
+    contents: '**/'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
 # publish build
 - task: PublishBuildArtifacts@1
   inputs: 
-    PathtoPublish: '$(System.DefaultWorkingDirectory)' # upload the entire dir
-    # PathtoPublish: $(Build.ArtifactStagingDirectory) # dist or build files
-    ArtifactName: 'www' # output artifact named www
+    # PathtoPublish: '$(System.DefaultWorkingDirectory)' # upload the entire dir
+    PathtoPublish: $(Build.ArtifactStagingDirectory) # dist or build files
+    publishLocation: 'Container' # Options: container, filePath
+    #targetPath: # Required when publishLocation == FilePath
+    ArtifactName: 'beckiePipeline' # output artifact named www
+
+- task: PublishTestResults@2
+  inputs:
+    testResultsFiles: '**/TEST-RESULTS.xml'
+    testRunTitle: 'Test results for JavaScript using gulp'
+
+- task: PublishCodeCoverageResults@1
+  inputs: 
+    codeCoverageTool: Cobertura
+    summaryFileLocation: '$(System.DefaultWorkingDirectory)/**/*coverage.xml'
+    reportDirectory: '$(System.DefaultWorkingDirectory)/**/coverage'
+
+- task: DownloadBuildArtifacts@0
+  inputs:
+    buildType: 'current'
+    downloadType: 'single'
+    artifactName: 'beckiePipeline'
+    # downloadPath: '$(System.ArtifactsDirectory)'
+    downloadPath: $(Build.ArtifactStagingDirectory)
 
 # deploy
 - task: ArchiveFiles@2
@@ -51,4 +73,4 @@ steps:
       runOnce:
         deploy:
           steps:
-          - script: echo Hello world
+          - script: 'npm run start' 
