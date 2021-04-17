@@ -61,15 +61,19 @@ steps:
     rootFolderOrFile: '$(System.DefaultWorkingDirectory)'
     includeRootFolder: false
 
-jobs:
-- deployment: DeployWeb
-  displayName: deploy Web App
-  pool:
-    vmImage: 'Ubuntu-latest'
-  # creates an environment if it doesn't exist
-  environment: 'alpha'
-  strategy:
-    runOnce:
-      deploy:
-        steps:
-        - script: 'npm run start'
+# variables:
+#   azureSubscription: WVT-alpha 
+#   # To ignore SSL error uncomment the below variable
+#   VSTS_ARM_REST_IGNORE_SSL_ERRORS: true
+
+# steps:
+
+# - task: AzureWebApp@1
+#   displayName: Azure Web App Deploy
+#   inputs:
+#     azureSubscription: $(azureSubscription)
+#     appName: 
+#     appType: webAppLinux
+#     package: $(System.DefaultWorkingDirectory)
+#     deploymentMethod: auto
+#     startUpCommand: 'npm run start'
