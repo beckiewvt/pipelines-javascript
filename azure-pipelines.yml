@@ -9,7 +9,7 @@ trigger:
 variables:
 
   # Azure Resource Manager connection created during pipeline creation
-  azureSubscription: 'bc1f45e1-5612-4e43-be99-822afaee5f10'
+  azureSubscription: 'b0288b9e-de28-4745-9bdb-00e5a043abec'
 
   # Web app name
   webAppName: 'beckie-pipelines'
