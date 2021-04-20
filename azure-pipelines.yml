@@ -9,7 +9,7 @@ trigger:
 variables:
 
   # Azure Resource Manager connection created during pipeline creation
-  azureSubscription: 'b0288b9e-de28-4745-9bdb-00e5a043abec'
+  azureSubscription: 'pipeline-connection'
 
   # Web app name
   webAppName: 'beckie-pipelines'
@@ -73,6 +73,6 @@ stages:
               azureSubscription: $(azureSubscription)
               appType: webAppLinux
               appName: $(webAppName)
-              runtimeStack: 'NODE|10.10'
+              runtimeStack: 'NODE|14.14.0'
               package: $(Pipeline.Workspace)/drop/$(Build.BuildId).zip
               startUpCommand: 'npm run start'
