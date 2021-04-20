@@ -1,4 +1,4 @@
-[![Build Status](https://dev.azure.com/wvt-devops/sample-node-pipeline/_apis/build/status/beckiewvt.pipelines-javascript?branchName=master)](https://dev.azure.com/wvt-devops/sample-node-pipeline/_build/latest?definitionId=1&branchName=master)
+[![Build Status](https://dev.azure.com/worldvisiontaiwan/pipelines-javascript/_build/latest?definitionId=1&branchName=master)](https://dev.azure.com/worldvisiontaiwan/pipelines-javascript/_build/latest?definitionId=1&branchName=master)
 
 # Sample NodeJS application for Azure Pipelines docs
 
